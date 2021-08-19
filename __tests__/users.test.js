@@ -23,4 +23,20 @@ describe('demo routes', () => {
       email: 'cupajoe@aol.com',
     });
   });
+
+  it('logs in a user via POST', async () => {
+    const res = await request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        username: 'CupAJoe',
+        email: 'cupajoe@aol.com',
+        password: 'coffee123',
+      });
+
+    expect(res.body).toEqual({
+      id: '1',
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+    });
+  });
 });
