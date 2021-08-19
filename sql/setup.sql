@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS favorites CASCADE;
 DROP TABLE IF EXISTS shops CASCADE;
 DROP TABLE IF EXISTS menus CASCADE;
 DROP TABLE IF EXISTS recipes CASCADE;
-DROP TABLE IF EXISTS beans CASCADE; 
+DROP TABLE IF EXISTS beans CASCADE;
+DROP TABLE IF EXISTS brew_methods CASCADE; 
 
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -59,7 +60,23 @@ CREATE TABLE beans_recipes (
     recipes_id BIGINT,
     FOREIGN KEY (beans_id) REFERENCES beans(id),
     FOREIGN KEY (recipes_id) REFERENCES recipes(id)
-);
+)
 
+CREATE TABLE brew_methods (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    method TEXT NOT NULL
+) 
 
+CREATE TABLE beans_brew_methods (
+    beans_id BIGINT,
+    brews_id BIGINT,
+    FOREIGN KEY (beans_id) REFERENCES beans(id),
+    FOREIGN KEY (brews_id) REFERENCES brew_methods(id)
+)
+
+CREATE TABLE drink_styles (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    style TEXT NOT NULL, 
+    
+)
 
