@@ -53,4 +53,18 @@ describe('demo routes', () => {
 
     expect(res.body).toEqual([drink1, drink2, drink3]);
   });
+  it('get a drink byId', async () => {
+    const drink = await Drink.insert({
+      drinkName: 'Latte',
+      brew: 'Espresso',
+      description:
+        'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
+      ingredients: ['Espresso', 'Steamed Milk']
+    });
+    const res = await request(app).get(`/api/v1/drinks/${drink.id}`);
+    expect(res.body).toEqual({
+      id: '1',
+      ...drink
+    });
+  });
 });
