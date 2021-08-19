@@ -3,7 +3,6 @@ import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 
-
 describe('demo routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -12,10 +11,16 @@ describe('demo routes', () => {
   it('creates a user via POST', async () => {
     const res = await request(app)
       .post('/api/v1/auth/signup')
-      .send({ username: 'CupAJoe', email: 'cupajoe@aol.com', password: 'coffee123' });
+      .send({
+        username: 'CupAJoe',
+        email: 'cupajoe@aol.com',
+        password: 'coffee123',
+      });
 
-    expect(res.body).toEqual({ id: '1', username: 'CupAJoe', email: 'cupajoe@aol.com' });
+    expect(res.body).toEqual({
+      id: '1',
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+    });
   });
-
-
 });
