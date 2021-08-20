@@ -31,7 +31,7 @@ describe('demo routes', () => {
         email: 'cupajoe@aol.com',
         password: 'coffee123',
       });
-      
+
     expect(res.body).toEqual({
       id: '1',
       username: 'CupAJoe',
@@ -39,23 +39,23 @@ describe('demo routes', () => {
     });
   });
 
-  it('User can add fav drink VIA POST', async () => {
+  it('user can add fav drink via POST', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
-    const favoriteDrink = ['Americano'];
-    
+    const favoriteDrink = 'Americano';
+
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
     const userFavDrink = await request(app)
       .post('/api/v1/favorites')
-      .send(favoriteDrink);
+      .send({ favoriteDrink, id: loggedUser.body.id });
     const { favDrink } = userFavDrink;
- 
+
     expect({ ...loggedUser.body, favoriteDrink }).toEqual({
       id: '1',
-      favDrink,
+      favoriteDrink,
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
     });
