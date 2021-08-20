@@ -66,23 +66,18 @@ describe('demo routes', () => {
     };
 
     const favoriteDrink = 'Flat White';
-    const favoriteDrink2 = 'Americano';
 
     
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
     await request(app)
-      .post('/api/v1/favorites')
+      .post('/api/v1/auth/favorites')
       .send({ favoriteDrink, id: loggedUser.body.id });
-    await request(app)
-      .post('/api/v1/favorites')
-      .send({ favoriteDrink2, id: loggedUser.body.id });
 
-    const res = await request(app).get(`/api/v1/favorites/${loggedUser.body.id}`);
-
-    expect({ ...loggedUser.body, favoriteDrink: res.body.favoriteDrink, favoriteDrink2: res.body.favoriteDrink2 }).toEqual({
+    const res = await request(app).get(`/api/v1/auth/favorites/${loggedUser.body.id}`);
+    console.log('res <---------', res.body);
+    expect({ ...loggedUser.body, favoriteDrink: res.body.favoriteDrink }).toEqual({
       id: '1',
       favoriteDrink,
-      favoriteDrink2,
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
     });
