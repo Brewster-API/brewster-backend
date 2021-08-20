@@ -4,7 +4,7 @@ import request from 'supertest';
 import app from '../lib/app.js';
 
 describe('demo routes', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     return setup(pool);
   });
 
@@ -17,6 +17,21 @@ describe('demo routes', () => {
         password: 'coffee123',
       });
 
+    expect(res.body).toEqual({
+      id: '1',
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+    });
+  });
+
+  it('logs in a user via POST', async () => {
+    const res = await request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'cupajoe@aol.com',
+        password: 'coffee123',
+      });
+      
     expect(res.body).toEqual({
       id: '1',
       username: 'CupAJoe',
