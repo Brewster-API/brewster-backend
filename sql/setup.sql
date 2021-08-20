@@ -1,82 +1,18 @@
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS favorites CASCADE;
-DROP TABLE IF EXISTS shops CASCADE;
-DROP TABLE IF EXISTS menus CASCADE;
-DROP TABLE IF EXISTS recipes CASCADE;
-DROP TABLE IF EXISTS beans CASCADE;
-DROP TABLE IF EXISTS brew_methods CASCADE; 
+
+DROP TABLE IF EXISTS drinks CASCADE;
 
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username TEXT NOT NULL,
-    email TEXT NOT NULL,
-    password_hash TEXT NOT NULL,
-    fav_id TEXT [] REFERENCES favorites(id)
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL
 );
 
-CREATE TABLE favorites (
+CREATE TABLE drinks (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_favorites TEXT [],
-    menu_id
+    drink_name TEXT NOT NULL,
+    brew TEXT NOT NULL,
+    drink_description TEXT NOT NULL,
+    ingredients TEXT []
 );
-
-CREATE TABLE menus (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    item_name TEXT NOT NULL,
-    description TEXT,
-    shop_id TEXT NOT NULL REFERENCES shops(id)
-);
-
-CREATE TABLE favorites_menus (
-    favorites_id BIGINT,
-    menus_id BIGINT,
-    FOREIGN KEY (favorites_id) REFERENCES favorites(id),
-    FOREIGN KEY (menus_id) REFERENCES menus(id)
-);
-
-CREATE TABLE shops (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    username TEXT NOT NULL,
-    email TEXT NOT NULL,
-    password_hash TEXT NOT NULL,
-    name TEXT NOT NULL,
-    location TEXT NOT NULL,
-    menu_id TEXT NOT NULL [] REFERENCES menus(id)
-);
-
-CREATE TABLE recipes (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    ingridients TEXT []
-);
-
-CREATE TABLE beans (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    type TEXT NOT NULL,
-    origin TEXT NOT NULL
-)
-
-CREATE TABLE beans_recipes (
-    beans_id BIGINT,
-    recipes_id BIGINT,
-    FOREIGN KEY (beans_id) REFERENCES beans(id),
-    FOREIGN KEY (recipes_id) REFERENCES recipes(id)
-)
-
-CREATE TABLE brew_methods (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    method TEXT NOT NULL
-) 
-
-CREATE TABLE beans_brew_methods (
-    beans_id BIGINT,
-    brews_id BIGINT,
-    FOREIGN KEY (beans_id) REFERENCES beans(id),
-    FOREIGN KEY (brews_id) REFERENCES brew_methods(id)
-)
-
-CREATE TABLE drink_styles (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    style TEXT NOT NULL, 
-    
-)
-
