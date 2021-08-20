@@ -48,10 +48,10 @@ describe('demo routes', () => {
     const favoriteDrink = 'Americano';
 
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
-    const userFavDrink = await request(app)
+    await request(app)
       .post('/api/v1/favorites')
       .send({ favoriteDrink, id: loggedUser.body.id });
-    const { favDrink } = userFavDrink;
+
 
     expect({ ...loggedUser.body, favoriteDrink }).toEqual({
       id: '1',
