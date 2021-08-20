@@ -38,4 +38,26 @@ describe('demo routes', () => {
       email: 'cupajoe@aol.com',
     });
   });
+
+  it('User can add fav drink VIA POST', async () => {
+    const user = {
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    };
+    const favoriteDrink = ['Americano'];
+    
+    const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
+    const userFavDrink = await request(app)
+      .post('/api/v1/favorites')
+      .send(favoriteDrink);
+    const { favDrink } = userFavDrink;
+ 
+    expect({ ...loggedUser.body, favoriteDrink }).toEqual({
+      id: '1',
+      favDrink,
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+    });
+  });
 });
