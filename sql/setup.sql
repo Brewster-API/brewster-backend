@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS users CASCADE;
-
 DROP TABLE IF EXISTS drinks CASCADE;
+DROP TABLE IF EXISTS favorites CASCADE;
 
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -11,8 +11,16 @@ CREATE TABLE users (
 
 CREATE TABLE drinks (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    drink_name TEXT NOT NULL,
+    drink_name TEXT NOT NULL UNIQUE,
     brew TEXT NOT NULL,
     drink_description TEXT NOT NULL,
     ingredients TEXT []
 );
+
+CREATE TABLE favorites (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id), 
+    fav_drink TEXT REFERENCES drinks(drink_name)
+); 
+
+
