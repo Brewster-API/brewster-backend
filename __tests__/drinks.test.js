@@ -8,6 +8,7 @@ describe('demo routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
+
   it('creates a new drink via POST', async () => {
     const drink = {
       drinkName: 'Latte',
@@ -51,6 +52,7 @@ describe('demo routes', () => {
 
     expect(res.body).toEqual([drink1, drink2, drink3]);
   });
+
   it('get a drink byId', async () => {
     const drink = await Drink.insert({
       drinkName: 'Latte',

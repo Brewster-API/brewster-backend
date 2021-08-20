@@ -9,13 +9,11 @@ describe('demo routes', () => {
   });
 
   it('creates a user via POST', async () => {
-    const res = await request(app)
-      .post('/api/v1/auth/signup')
-      .send({
-        username: 'CupAJoe',
-        email: 'cupajoe@aol.com',
-        password: 'coffee123',
-      });
+    const res = await request(app).post('/api/v1/auth/signup').send({
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    });
 
     expect(res.body).toEqual({
       id: '1',
@@ -25,12 +23,10 @@ describe('demo routes', () => {
   });
 
   it('logs in a user via POST', async () => {
-    const res = await request(app)
-      .post('/api/v1/auth/login')
-      .send({
-        email: 'cupajoe@aol.com',
-        password: 'coffee123',
-      });
+    const res = await request(app).post('/api/v1/auth/login').send({
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    });
 
     expect(res.body).toEqual({
       id: '1',
@@ -51,7 +47,6 @@ describe('demo routes', () => {
     await request(app)
       .post('/api/v1/favorites')
       .send({ favoriteDrink, id: loggedUser.body.id });
-
 
     expect({ ...loggedUser.body, favoriteDrink }).toEqual({
       id: '1',
