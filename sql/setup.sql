@@ -19,8 +19,8 @@ CREATE TABLE drinks (
 
 CREATE TABLE favorites (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id), 
+    user_id INTEGER REFERENCES users(id),
     fav_drink TEXT REFERENCES drinks(drink_name)
-); 
+);
 
 
