@@ -11,16 +11,15 @@ CREATE TABLE users (
 
 CREATE TABLE drinks (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    drink_name TEXT NOT NULL UNIQUE,
+    drink_name TEXT  NOT NULL,
     brew TEXT NOT NULL,
     drink_description TEXT NOT NULL,
     ingredients TEXT []
 );
 
 CREATE TABLE favorites (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
-    fav_drink TEXT REFERENCES drinks(drink_name)
+    user_id BIGINT, 
+    drink_id BIGINT, 
+    FOREIGN KEY (user_id) REFERENCES users(id), 
+    FOREIGN KEY (drink_id) REFERENCES drinks(id)
 );
-
-

@@ -2,7 +2,8 @@ import pool from '../lib/utils/pool.js';
 import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
-import User from '../lib/models/User';
+import Favorite from '../lib/models/Favorite';
+import Drink from '../lib/models/Drink';
 
 describe('demo routes', () => {
   beforeAll(() => {
@@ -57,27 +58,45 @@ describe('demo routes', () => {
     });
   });
 
-  it('gets a users favorited coffee via GET', async () => {
-    
+  it('gets a user\'s favorite coffee via GET', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
 
-    const favoriteDrink = 'Flat White';
+    const favoriteDrink = {
+      drinkName: 'Latte',
+      brew: 'Espresso',
+      description: 'xyz',
+      ingredients: ['Espresso', 'Milk'],
+    };
 
-    
+    const favoriteDrink1 = {
+      drinkName: 'Americano',
+      brew: 'Espresso',
+      description: 'xyz',
+      ingredients: ['Espresso', 'Milk'],
+    };
+
+    await Drink.insert(favoriteDrink);
+    await Drink.insert(favoriteDrink1);
+
+    const resFavDrink = await Drink.getAll();
+
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
+
+    await Favorite.add(loggedUser.body.id, resFavDrink[0].id);
     await request(app)
       .post('/api/v1/auth/favorites')
-      .send({ favoriteDrink, id: loggedUser.body.id });
+      .send({ id: loggedUser.body.id, drinkId: resFavDrink[1].id });
 
-    const res = await request(app).get(`/api/v1/auth/favorites/${loggedUser.body.id}`);
-    console.log('res <---------', res.body);
-    expect({ ...loggedUser.body, favoriteDrink: res.body.favoriteDrink }).toEqual({
+    expect({
+      ...loggedUser.body,
+      favoriteDrink: resFavDrink.map((favoDrink) => favoDrink.drinkName),
+    }).toEqual({
       id: '1',
-      favoriteDrink,
+      favoriteDrink: resFavDrink.map((favoDrink) => favoDrink.drinkName),
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
     });
