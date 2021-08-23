@@ -81,9 +81,7 @@ describe('demo routes', () => {
 
     await Drink.insert(favoriteDrink);
     await Drink.insert(favoriteDrink1);
-    // await request(app).post('/api/v1/drinks').send(favoriteDrink);
-    // await request(app).post('/api/v1/drinks').send(favoriteDrink1);
-    // just use model functions
+
     const resFavDrink = await Drink.getAll();
 
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
@@ -93,18 +91,12 @@ describe('demo routes', () => {
       .post('/api/v1/auth/favorites')
       .send({ id: loggedUser.body.id, drinkId: resFavDrink[1].id });
 
-    const favDrinks = [];
-    for (const item of resFavDrink) {
-      favDrinks.push(item.drinkName);
-    }
-    // .map()
-
     expect({
       ...loggedUser.body,
-      favoriteDrink: favDrinks,
+      favoriteDrink: resFavDrink.map((favoDrink) => favoDrink.drinkName),
     }).toEqual({
       id: '1',
-      favoriteDrink: favDrinks,
+      favoriteDrink: resFavDrink.map((favoDrink) => favoDrink.drinkName),
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
     });
