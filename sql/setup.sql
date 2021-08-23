@@ -14,7 +14,8 @@ CREATE TABLE drinks (
     drink_name TEXT  NOT NULL,
     brew TEXT NOT NULL,
     drink_description TEXT NOT NULL,
-    ingredients TEXT []
+    ingredients TEXT [] NOT NULL, 
+    post_id BIGINT REFERENCES users(id)
 );
 
 CREATE TABLE favorites (

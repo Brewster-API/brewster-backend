@@ -5,18 +5,20 @@ import app from '../lib/app.js';
 import Favorite from '../lib/models/Favorite';
 import Drink from '../lib/models/Drink';
 
+const agent = request.agent(app); 
+
 describe('demo routes', () => {
   beforeAll(() => {
     return setup(pool);
   });
 
   it('creates a user via POST', async () => {
-    const res = await request(app).post('/api/v1/auth/signup').send({
+    const res = await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
-
+ 
     expect(res.body).toEqual({
       id: '1',
       username: 'CupAJoe',
@@ -25,7 +27,7 @@ describe('demo routes', () => {
   });
 
   it('logs in a user via POST', async () => {
-    const res = await request(app).post('/api/v1/auth/login').send({
+    const res = await agent.post('/api/v1/auth/login').send({
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
@@ -84,10 +86,10 @@ describe('demo routes', () => {
 
     const resFavDrink = await Drink.getAll();
 
-    const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
+    const loggedUser = await agent.post('/api/v1/auth/login').send(user);
   
     await Favorite.add(loggedUser.body.id, resFavDrink[0].id);
-    await request(app)
+    await agent
       .post('/api/v1/auth/favorites')
       .send({ id: loggedUser.body.id, drinkId: resFavDrink[1].id });
 
@@ -116,23 +118,23 @@ describe('demo routes', () => {
       ingredients: ['Espresso', 'Milk'],
     };
 
-    const userInfo = await request(app).post('/api/v1/auth/login').send(user);
+    const userInfo = await agent.post('/api/v1/auth/login').send(user);
  
-    const res = await request(app)
-      .post(`/api/v1/auth/drinks/${userInfo.body.id}`)
+    const res = await agent
+      .post('/api/v1/auth/drinks')
       .send(userDrink, userInfo.body.id);
     
     expect(res.body).toEqual({
       id: res.body.id,
       ...userDrink,
-      user: userInfo.id, 
-    }); 
+      user: userInfo.id,
+    });
   });
   
-  // it('User can update their own post via PUT', async () => {
+  // it('User can update their own posts via PUT', async () => {
   //   const user = {
-  //     username: 'MochaJoe',
-  //     email: 'mochaJo@aol.com',
+  //     username: 'CupAJoe',
+  //     email: 'cupajoe@aol.com',
   //     password: 'coffee123',
   //   };
 
@@ -144,17 +146,26 @@ describe('demo routes', () => {
   //   };
     
   //   const updateDrink = {
-  //     drinkName: 'ChaiLatte',
+  //     drinkName: 'Chai Latte',
   //     brew: 'Espresso',
-  //     description: 'xyz',
-  //     ingredients: ['Espresso', 'Milk', 'Chai'],
+  //     description: 'Chai Latte',
+  //     ingredients: ['Milk', 'Tea'],
   //   };
 
-
-
-  //   const drinkInfo = await request(app).post('/api/v1/auth/login').send(user);
-  //   await Drink.insert(userDrink);
-  //   const  updatedDrinkInfo = await request(app).put()
-        
+  //   const userInfo = await agent
+  //     .post('/api/v1/auth/login')
+  //     .send(user);
+  
+  //   await Drink.insertDrinkToAPI({ ...userDrink, userId: userInfo.body.id });
+    
+  //   const updatedDrinkInfo = await agent
+  //     .put(`/api/v1/auth/drinks/${userInfo.body.id}`) // refactor this // this should be the drink id
+  //     .send(updateDrink);
+    
+  //   expect(updatedDrinkInfo.body).toEqual({
+  //     id: '1',
+  //     ...userInfo, 
+  //     ...updateDrink, 
+  //   }); 
   // }); 
 });

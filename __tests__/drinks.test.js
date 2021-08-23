@@ -4,25 +4,37 @@ import request from 'supertest';
 import app from '../lib/app.js';
 import Drink from '../lib/models/Drink.js';
 
+const agent = request.agent(app); 
+
 describe('demo routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
 
   it('creates a new drink via POST', async () => {
+
+    const user =  await agent.post('/api/v1/auth/signup').send({
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    });
+
     const drink = {
       drinkName: 'Latte',
       brew: 'Espresso',
       description:
         'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
       ingredients: ['Espresso', 'Steamed Milk'],
+      postId: user.body.id
     };
+   
 
     const res = await request(app).post('/api/v1/drinks').send(drink);
 
     expect(res.body).toEqual({
       id: '1',
       ...drink,
+      postId: '1'  
     });
   });
 
