@@ -7,7 +7,7 @@ import Drink from '../lib/models/Drink';
 
 const agent = request.agent(app); 
 
-describe('demo routes', () => {
+describe('user routes', () => {
   beforeAll(() => {
     return setup(pool);
   });
@@ -105,67 +105,61 @@ describe('demo routes', () => {
   });
 
   it('users can add drinks under their account via POST', async () => {
-    const user = {
+    const user =  await agent.post('/api/v1/auth/login').send({
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
       password: 'coffee123',
-    };
+    });
 
     const userDrink = {
       drinkName: 'Latte',
       brew: 'Espresso',
       description: 'xyz',
       ingredients: ['Espresso', 'Milk'],
+      postId: user.body.id
     };
 
-    const userInfo = await agent.post('/api/v1/auth/login').send(user);
  
     const res = await agent
       .post('/api/v1/auth/drinks')
-      .send(userDrink, userInfo.body.id);
+      .send(userDrink, user.body.id);
     
     expect(res.body).toEqual({
       id: res.body.id,
       ...userDrink,
-      user: userInfo.id,
     });
   });
   
-  // it('User can update their own posts via PUT', async () => {
-  //   const user = {
-  //     username: 'CupAJoe',
-  //     email: 'cupajoe@aol.com',
-  //     password: 'coffee123',
-  //   };
-
-  //   const userDrink = {
-  //     drinkName: 'Latte',
-  //     brew: 'Espresso',
-  //     description: 'xyz',
-  //     ingredients: ['Espresso', 'Milk'],
-  //   };
+  it('User can update their own posts via PUT', async () => {
+    const user =  await agent.post('/api/v1/auth/login').send({
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    });
+    const userDrink = {
+      drinkName: 'Latte',
+      brew: 'Espresso',
+      description: 'xyz',
+      ingredients: ['Espresso', 'Milk'],
+      postId: user.body.id
+    };
     
-  //   const updateDrink = {
-  //     drinkName: 'Chai Latte',
-  //     brew: 'Espresso',
-  //     description: 'Chai Latte',
-  //     ingredients: ['Milk', 'Tea'],
-  //   };
-
-  //   const userInfo = await agent
-  //     .post('/api/v1/auth/login')
-  //     .send(user);
+    const updateDrink = {
+      drinkName: 'Chai Latte',
+      brew: 'Espresso',
+      description: 'Chai Latte',
+      ingredients: ['Milk', 'Tea'],
+      postId: user.body.id
+    }; 
   
-  //   await Drink.insertDrinkToAPI({ ...userDrink, userId: userInfo.body.id });
-    
-  //   const updatedDrinkInfo = await agent
-  //     .put(`/api/v1/auth/drinks/${userInfo.body.id}`) // refactor this // this should be the drink id
-  //     .send(updateDrink);
-    
-  //   expect(updatedDrinkInfo.body).toEqual({
-  //     id: '1',
-  //     ...userInfo, 
-  //     ...updateDrink, 
-  //   }); 
-  // }); 
+    const drink = await Drink.insertDrinkToAPI({ ...userDrink, userId: user.body.id });
+    const updatedDrinkInfo = await agent
+      .put(`/api/v1/auth/drinks/${drink.id}`) // refactor this // this should be the drink id
+      .send(updateDrink);
+      console.log('yerrrrrrrrrrrr', updatedDrinkInfo);
+    expect(updatedDrinkInfo.body).toEqual({
+      id: '4',
+      ...updateDrink, 
+    }); 
+  }); 
 });

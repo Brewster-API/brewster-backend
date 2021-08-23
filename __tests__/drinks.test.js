@@ -6,7 +6,7 @@ import Drink from '../lib/models/Drink.js';
 
 const agent = request.agent(app); 
 
-describe('demo routes', () => {
+describe('drink routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
