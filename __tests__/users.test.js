@@ -58,7 +58,7 @@ describe('demo routes', () => {
     });
   });
 
-  it("gets a user's favorite coffee via GET", async () => {
+  it('gets a user\'s favorite coffee via GET', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -79,8 +79,10 @@ describe('demo routes', () => {
       ingredients: ['Espresso', 'Milk'],
     };
 
-    await request(app).post('/api/v1/drinks').send(favoriteDrink);
-    await request(app).post('/api/v1/drinks').send(favoriteDrink1);
+    await Drink.insert(favoriteDrink);
+    await Drink.insert(favoriteDrink1);
+    // await request(app).post('/api/v1/drinks').send(favoriteDrink);
+    // await request(app).post('/api/v1/drinks').send(favoriteDrink1);
     // just use model functions
     const resFavDrink = await Drink.getAll();
 
