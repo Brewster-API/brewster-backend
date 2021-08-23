@@ -85,7 +85,7 @@ describe('demo routes', () => {
     const resFavDrink = await Drink.getAll();
 
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
-
+  
     await Favorite.add(loggedUser.body.id, resFavDrink[0].id);
     await request(app)
       .post('/api/v1/auth/favorites')
@@ -104,8 +104,8 @@ describe('demo routes', () => {
 
   it('users can add drinks under their account via POST', async () => {
     const user = {
-      username: 'MochaJoe',
-      email: 'mochaJo@aol.com',
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
 
@@ -117,12 +117,13 @@ describe('demo routes', () => {
     };
 
     const userInfo = await request(app).post('/api/v1/auth/login').send(user);
+ 
     const res = await request(app)
-      .post('/api/v1/auth/user/drinks')
-      .send(userDrink, user.id);
-
+      .post(`/api/v1/auth/drinks/${userInfo.body.id}`)
+      .send(userDrink, userInfo.body.id);
+    
     expect(res.body).toEqual({
-      id: res.id,
+      id: res.body.id,
       ...userDrink,
       user: userInfo.id, 
     }); 
