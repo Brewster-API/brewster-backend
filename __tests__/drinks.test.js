@@ -34,7 +34,6 @@ describe('demo routes', () => {
     expect(res.body).toEqual({
       id: '1',
       ...drink,
-      postId: '1'  
     });
   });
 
