@@ -12,7 +12,6 @@ describe('drink routes', () => {
   });
 
   it('creates a new drink via POST', async () => {
-
     const user =  await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -28,7 +27,6 @@ describe('drink routes', () => {
       postId: user.body.id
     };
    
-
     const res = await request(app).post('/api/v1/drinks').send(drink);
 
     expect(res.body).toEqual({
