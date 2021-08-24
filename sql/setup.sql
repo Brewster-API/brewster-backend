@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS favorites CASCADE;
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL
+    email TEXT UNIQUE,
+    password_hash TEXT 
 );
 
 CREATE TABLE drinks (
