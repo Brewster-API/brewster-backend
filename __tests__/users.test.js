@@ -60,7 +60,7 @@ describe('user routes', () => {
     });
   });
 
-  it("gets a user's favorite coffee via GET", async () => {
+  it('gets a user\'s favorite coffee via GET', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -183,8 +183,7 @@ describe('user routes', () => {
       ...userDrink,
       userId: user.body.id,
     });
-    console.log(drink.id, 'drinkid');
-    await agent.delete(`/api/v1/auth/drinks/${drink.id}`);
+    await agent.delete(`/api/v1/auth/drinks/${drink.id}`); 
     expect({
       message: `${drink.id} was deleted`,
     }).toEqual({
