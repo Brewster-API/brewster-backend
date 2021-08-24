@@ -136,6 +136,7 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
+   
     const userDrink = {
       drinkName: 'Latte',
       brew: 'Espresso',
@@ -150,16 +151,15 @@ describe('user routes', () => {
       description: 'Chai Latte',
       ingredients: ['Milk', 'Tea'],
       postId: user.body.id
-    }; 
-  
+    };
+   
     const drink = await Drink.insertDrinkToAPI({ ...userDrink, userId: user.body.id });
-    const updatedDrinkInfo = await agent
-      .put(`/api/v1/auth/drinks/${drink.id}`) // refactor this // this should be the drink id
-      .send(updateDrink);
-      console.log('yerrrrrrrrrrrr', updatedDrinkInfo);
+   
+    const updatedDrinkInfo = await agent.put(`/api/v1/auth/drinks/${drink.id}`).send({ drinkId: drink.id, updateDrink });
+   
     expect(updatedDrinkInfo.body).toEqual({
-      id: '4',
-      ...updateDrink, 
+      id: drink.id,
+      ...updateDrink
     }); 
   }); 
 });
