@@ -162,4 +162,23 @@ describe('user routes', () => {
       ...updateDrink
     }); 
   }); 
+  it('should delete a drink post by ID Via DELETE', async () => {
+    const user =  await agent.post('/api/v1/auth/login').send({
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    });
+    const userDrink = {
+      drinkName: 'Latte',
+      brew: 'Espresso',
+      description: 'xyz',
+      ingredients: ['Espresso', 'Milk'],
+      postId: user.body.id
+    };
+    const drink = await Drink.insertDrinkToAPI({ ...userDrink, userId: user.body.id });
+    const res = await agent.delete(`/api/v1/auth/drinks/${drink.id}`);
+    expect(res.body).toEqual({
+      message: `${drink.id} was deleted`
+    });
+  });
 });
