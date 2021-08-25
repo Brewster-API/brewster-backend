@@ -10,12 +10,11 @@ describe('drink routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-
   
   it('filter drinks based on their brew methods', async () => {
     const user = {
       username: 'CupAJoe',
-      email: 'cupajoe@aol.com',
+      email: 'cupbjoe@aol.com',
       password: 'coffee123',
     };
 
@@ -54,7 +53,7 @@ describe('drink routes', () => {
   it('creates a new drink via POST', async () => {
     const user =  await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',
-      email: 'cupajoe@aol.com',
+      email: 'cupcjoe@aol.com',
       password: 'coffee123',
     });
 
@@ -117,7 +116,5 @@ describe('drink routes', () => {
     });
   });
 
-  // it('Get top 3 most popular', async () => {
 
-  // }); 
 });
