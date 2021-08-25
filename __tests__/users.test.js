@@ -45,11 +45,12 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
+    
     const favoriteDrink = 'Americano';
 
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
     await request(app)
-      .post('/api/v1/favorites')
+      .post('/api/v1/auth/favorites')
       .send({ favoriteDrink, id: loggedUser.body.id });
 
     expect({ ...loggedUser.body, favoriteDrink }).toEqual({

@@ -19,8 +19,8 @@ jobs:
         CI: true
         DATABASE_URL: postgres://alchemy:alchemy@postgres:5432/alchemy
         API_SECRET: ${{secrets.API_SECRET}}
-        Client_ID: ${{secrets.Client_ID}}
-        Client_secrets: ${{secrets.Client_secrets}}
-        REDIRECT_URL: https://warm-gorge-13979.herokuapp.com/api/v1/githubauth/githublogin/callback
+        CLIENT_ID: ${{secrets.CLIENT_ID}}
+        CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
+        REDIRECT_URL: http://warm-gorge-13979.herokuapp.com/api/v1/githubauth/githublogin/callback
 
 
