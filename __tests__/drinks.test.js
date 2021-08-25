@@ -105,10 +105,9 @@ describe('drink routes', () => {
 
     const res = await request(app).get('/api/v1/drinks?type=espresso');
 
-
-    expect(res.body).toEqual({
+    expect(res.body).toEqual([{
       id: '1',
       ...expressoDrink,
-    }); 
+    }]); 
   });
 });
