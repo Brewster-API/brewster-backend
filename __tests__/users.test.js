@@ -15,7 +15,6 @@ describe('user routes', () => {
   afterAll(() => {
     return pool.end();
   });
-
   it('creates a user via POST', async () => {
     const res = await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',

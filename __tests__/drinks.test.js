@@ -14,7 +14,6 @@ describe('drink routes', () => {
   afterAll(() => {
     return pool.end();
   });
-
   it('filter drinks based on their brew methods', async () => {
     const user = {
       username: 'CupAJoe',
