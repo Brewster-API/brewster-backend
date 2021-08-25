@@ -4,13 +4,17 @@ import request from 'supertest';
 import app from '../lib/app.js';
 import Drink from '../lib/models/Drink.js';
 
-const agent = request.agent(app); 
+const agent = request.agent(app);
 
 describe('drink routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  
+
+  afterAll(() => {
+    return pool.end();
+  });
+
   it('filter drinks based on their brew methods', async () => {
     const user = {
       username: 'CupAJoe',
@@ -51,7 +55,7 @@ describe('drink routes', () => {
   });
 
   it('creates a new drink via POST', async () => {
-    const user =  await agent.post('/api/v1/auth/signup').send({
+    const user = await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',
       email: 'cupcjoe@aol.com',
       password: 'coffee123',
@@ -63,9 +67,9 @@ describe('drink routes', () => {
       description:
         'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
       ingredients: ['Espresso', 'Steamed Milk'],
-      postId: user.body.id
+      postId: user.body.id,
     };
-   
+
     const res = await request(app).post('/api/v1/drinks').send(drink);
 
     expect(res.body).toEqual({
@@ -115,6 +119,4 @@ describe('drink routes', () => {
       ...drink,
     });
   });
-
-
 });
