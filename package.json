@@ -13,7 +13,7 @@
     "setup-heroku": "heroku run npm run setup-db"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "jsdom"
   },
   "keywords": [],
   "author": "",

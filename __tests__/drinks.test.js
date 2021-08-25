@@ -11,6 +11,45 @@ describe('drink routes', () => {
     return setup(pool);
   });
 
+  it('filter drinks based on their brew methods', async () => {
+    const user = {
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    };
+
+    const loggedUser = await request(app)
+      .post('/api/v1/auth/signup')
+      .send(user);
+
+    const expressoDrink = await Drink.insert({
+      drinkName: 'Latte',
+      brew: 'Espresso',
+      description:
+        'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
+      ingredients: ['Espresso', 'Steamed Milk'],
+      postId: loggedUser.body.id,
+    });
+
+    await Drink.insert({
+      drinkName: 'xyz',
+      brew: 'Drip',
+      description:
+        'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
+      ingredients: ['Espresso', 'Steamed Milk'],
+      postId: loggedUser.body.id,
+    });
+
+    const res = await request(app).get('/api/v1/drinks?type=espresso');
+
+    expect(res.body).toEqual([
+      {
+        id: '1',
+        ...expressoDrink,
+      },
+    ]);
+  });
+
   it('creates a new drink via POST', async () => {
     const user =  await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',
@@ -77,37 +116,7 @@ describe('drink routes', () => {
     });
   });
 
-  it.only('filter drinks based on their brew methods', async () => {
-    const user = {
-      username: 'CupAJoe',
-      email: 'cupajoe@aol.com',
-      password: 'coffee123',
-    };
-    
-    const loggedUser = await request(app).post('/api/v1/auth/signup').send(user);
-   
-    const expressoDrink = await Drink.insert({
-      drinkName: 'Latte',
-      brew: 'Espresso',
-      description:'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
-      ingredients: ['Espresso', 'Steamed Milk'],
-      postId: loggedUser.body.id,
-    });
+  // it('Get top 3 most popular', async () => {
 
-    await Drink.insert({
-      drinkName: 'xyz',
-      brew: 'Drip',
-      description:
-        'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
-      ingredients: ['Espresso', 'Steamed Milk'],
-      postId: loggedUser.body.id,
-    });
-
-    const res = await request(app).get('/api/v1/drinks?type=espresso');
-
-    expect(res.body).toEqual([{
-      id: '1',
-      ...expressoDrink,
-    }]); 
-  });
+  // }); 
 });
