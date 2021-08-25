@@ -61,7 +61,7 @@ describe('user routes', () => {
     });
   });
 
-  it('gets a user\'s favorite coffee via GET', async () => {
+  it('gets a users favorite coffee via GET', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -130,7 +130,7 @@ describe('user routes', () => {
     });
   });
 
-  it('User can update their own posts via PUT', async () => {
+  it('user can update their own posts via PUT', async () => {
     const user = await agent.post('/api/v1/auth/login').send({
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -167,7 +167,8 @@ describe('user routes', () => {
       ...updateDrink,
     });
   });
-  it('should delete a drink post by ID Via DELETE', async () => {
+
+  it('should delete a drink post by ID via DELETE', async () => {
     const user = await agent.post('/api/v1/auth/login').send({
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -184,11 +185,87 @@ describe('user routes', () => {
       ...userDrink,
       userId: user.body.id,
     });
-    await agent.delete(`/api/v1/auth/drinks/${drink.id}`); 
+    await agent.delete(`/api/v1/auth/drinks/${drink.id}`);
     expect({
       message: `${drink.id} was deleted`,
     }).toEqual({
       message: `${drink.id} was deleted`,
     });
+  });
+
+  it('returns the most popular drinks via GET', async () => {
+    const user = await agent.post('/api/v1/auth/signup').send({
+      username: 'CupAJoe',
+      email: 'cupajoe@aol.com',
+      password: 'coffee123',
+    });
+    const user2 = await agent.post('/api/v1/auth/signup').send({
+      username: 'MochaJoe',
+      email: 'mochajoe@aol.com',
+      password: 'coffee789',
+    });
+    const user3 = await agent.post('/api/v1/auth/signup').send({
+      username: 'LatteLarry',
+      email: 'lattelarry@aol.com',
+      password: 'lattelife',
+    });
+
+    const chaiLatte = {
+      drinkName: 'Chai Latte',
+      brew: 'Espresso',
+      description: 'Chai Latte',
+      ingredients: ['Milk', 'Tea'],
+      postId: user.body.id,
+    };
+    const userLatte = await Drink.insert({ ...chaiLatte });
+
+    const chaiLatte2 = {
+      drinkName: 'Chai Latte',
+      brew: 'Espresso',
+      description: 'Chai Latte',
+      ingredients: ['Milk', 'Tea'],
+      postId: user2.body.id,
+    };
+    const user2Latte = await Drink.insert({ ...chaiLatte2 });
+
+    const chaiLatte3 = {
+      drinkName: 'Chai Latte',
+      brew: 'Espresso',
+      description: 'Chai Latte',
+      ingredients: ['Milk', 'Tea'],
+      postId: user3.body.id,
+    };
+    const user3Latte = await Drink.insert({ ...chaiLatte3 });
+
+    const americano = {
+      drinkName: 'Americano',
+      brew: 'Espresso',
+      description: 'Americano',
+      ingredients: ['Milk', 'Tea'],
+      postId: user.body.id,
+    };
+    const userAmericano = await Drink.insert({ ...americano });
+
+    const americano2 = {
+      drinkName: 'Americano',
+      brew: 'Espresso',
+      description: 'Americano',
+      ingredients: ['Milk', 'Tea'],
+      postId: user2.body.id,
+    };
+    const user2Americano = await Drink.insert({ ...americano2 });
+
+    const flatWhite = {
+      drinkName: 'Flat White',
+      brew: 'Espresso',
+      description: 'Flat White',
+      ingredients: ['Milk', 'Tea'],
+      postId: user.body.id,
+    };
+    const userFlat = await Drink.insert({ ...flatWhite });
+    console.log(userAmericano, user2Americano);
+    // await Favorite.add(user.body.id, )
+
+    // expect(res.body).toEqual({ });
   });
 });

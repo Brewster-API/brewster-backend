@@ -21,6 +21,4 @@ jobs:
         API_SECRET: ${{secrets.API_SECRET}}
         CLIENT_ID: ${{secrets.CLIENT_ID}}
         CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
-        REDIRECT_URL: http://warm-gorge-13979.herokuapp.com/api/v1/githubauth/githublogin/callback
-
-
+     
