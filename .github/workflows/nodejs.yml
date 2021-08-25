@@ -19,3 +19,4 @@ jobs:
         CI: true
         DATABASE_URL: postgres://alchemy:alchemy@postgres:5432/alchemy
         API_SECRET: ${{ secrets.API_SECRET}}
+        
