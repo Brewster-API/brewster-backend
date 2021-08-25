@@ -9,8 +9,13 @@
     "test:watch": "npm run test -- --watch",
     "start": "node -r dotenv/config server.js",
     "start:watch": "nodemon -r dotenv/config server.js",
-    "setup-db": "node -r dotenv/config setup-db.js",
-    "setup-heroku": "heroku run npm run setup-db"
+    "setup-db": "npm run recreate-tables && npm run load-seed-data",
+    "setup-heroku": "heroku run npm run setup-db",
+    "lint": "eslint .",
+    "create-tables": "node data/create-tables.js",
+    "drop-tables": "node data/drop-tables.js",
+    "load-seed-data": "node data/load-seed-data.js",
+    "recreate-tables": "npm run drop-tables && npm run create-tables"
   },
   "jest": {
     "testEnvironment": "jsdom"

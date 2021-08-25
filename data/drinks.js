@@ -1,4 +1,4 @@
-[
+const drinks = [
   {
     id: 1,
     drinkName: 'Black',
@@ -158,7 +158,7 @@
     description:
       'Bring panela and coffee to a boil in a small pan for 30 minutes until panela is melted. Brew your coffee using your favorite brewing technique but add the hot aguapanela instead of hot water. Delicious sweetened coffee is ready.',
     ingredients: ['Coffee', 'Sweet', 'Panela', 'Traditional'],
-  },
-  { id: 21, drinkName: '', description: '', ingredients: [''] },
-  { id: 22, drinkName: '', description: '', ingredients: [''] },
+  }
 ];
+
+export default drinks;
