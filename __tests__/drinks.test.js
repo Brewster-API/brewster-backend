@@ -52,7 +52,6 @@ describe('drink routes', () => {
       },
     ]);
   });
-
   it('creates a new drink via POST', async () => {
     const user = await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',

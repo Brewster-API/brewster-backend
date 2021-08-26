@@ -158,7 +158,7 @@ const drinks = [
     description:
       'Bring panela and coffee to a boil in a small pan for 30 minutes until panela is melted. Brew your coffee using your favorite brewing technique but add the hot aguapanela instead of hot water. Delicious sweetened coffee is ready.',
     ingredients: ['Coffee', 'Sweet', 'Panela', 'Traditional'],
-  }
+  },
 ];
 
 export default drinks;
