@@ -133,7 +133,7 @@ describe('user routes', () => {
     });
   });
 
-  it('user can update their own posts via PUT', async () => {
+  it.skip('user can update their own posts via PUT', async () => {
     const user = await agent.post('/api/v1/auth/login').send({
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
