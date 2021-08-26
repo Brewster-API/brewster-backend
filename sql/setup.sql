@@ -16,8 +16,8 @@ CREATE TABLE drinks (
     post_id BIGINT REFERENCES users(id)
 );
 CREATE TABLE favorites (
-    user_id BIGINT,
-    drink_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (drink_id) REFERENCES drinks(id)
+    user_id BIGINT NOT NULL,
+    drink_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (drink_id) REFERENCES drinks(id) ON DELETE CASCADE
 );
