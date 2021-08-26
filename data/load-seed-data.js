@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import client from '../lib/client.js';
 import drinks from './drinks.js';
-
 run();
 
 async function run() {
