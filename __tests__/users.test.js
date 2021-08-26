@@ -41,7 +41,6 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
     });
   });
-
   it('user can add fav drink via POST', async () => {
     const user = {
       username: 'CupAJoe',
@@ -63,8 +62,7 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
     });
   });
-
-  it('gets a users favorite coffee via GET', async () => {
+  it('gets a users favorite coffees via GET', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
