@@ -52,7 +52,7 @@ describe('user routes', () => {
     });
     const loggedUser = await agent.post('/api/v1/auth/login').send(user);
     await agent
-      .post('/api/v1/auth/users/favorites')
+      .post('/api/v1/auth/favorites')
       .send({ id: loggedUser.body.id, drinkId: addedDrink.id });
     expect({ ...loggedUser.body }).toEqual({
       id: '1',
@@ -87,7 +87,7 @@ describe('user routes', () => {
 
     await Favorite.add(loggedUser.body.id, resFavDrink[0].id);
     await agent
-      .post('/api/v1/auth/users/favorites')
+      .post('/api/v1/auth/favorites')
       .send({ id: loggedUser.body.id, drinkId: resFavDrink[1].id });
 
     expect({
@@ -128,7 +128,6 @@ describe('user routes', () => {
 
   it('user can update their own posts via PUT', async () => {
     const user = await agent.post('/api/v1/auth/login').send({
-      username: 'CupAJoe',
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
@@ -151,6 +150,7 @@ describe('user routes', () => {
       ...userDrink,
       userId: user.body.id,
     });
+   
     const updatedDrinkInfo = await agent
       .put(`/api/v1/auth/drinks/${drink.id}`)
       .send({ ...updateDrink });
