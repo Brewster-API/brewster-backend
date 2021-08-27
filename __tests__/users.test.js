@@ -21,20 +21,17 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
-
     expect(res.body).toEqual({
       id: '1',
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
     });
   });
-
   it('logs in a user via POST', async () => {
     const res = await agent.post('/api/v1/auth/login').send({
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
-
     expect(res.body).toEqual({
       id: '1',
       username: 'CupAJoe',
@@ -47,14 +44,11 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
-
     const favoriteDrink = 'Americano';
-
     const loggedUser = await request(app).post('/api/v1/auth/login').send(user);
     await request(app)
       .post('/api/v1/auth/favorites')
       .send({ favoriteDrink, id: loggedUser.body.id });
-
     expect({ ...loggedUser.body, favoriteDrink }).toEqual({
       id: '1',
       favoriteDrink,
@@ -62,7 +56,7 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
     });
   });
-  it.skip('gets a users favorite coffees via GET', async () => {
+  it.skip ('gets a users favorite coffees via GET', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupajoe@aol.com',
@@ -85,9 +79,7 @@ describe('user routes', () => {
 
     await Drink.insert(favoriteDrink);
     await Drink.insert(favoriteDrink1);
-
     const resFavDrink = await Drink.getAll();
-
     const loggedUser = await agent.post('/api/v1/auth/login').send(user);
 
     await Favorite.add(loggedUser.body.id, resFavDrink[0].id);
@@ -158,7 +150,6 @@ describe('user routes', () => {
       ...userDrink,
       userId: user.body.id,
     });
-
     const updatedDrinkInfo = await agent
       .put(`/api/v1/auth/drinks/${drink.id}`)
       .send({ drinkId: drink.id, updateDrink });
@@ -186,6 +177,7 @@ describe('user routes', () => {
       ...userDrink,
       userId: user.body.id,
     });
+    
     await agent.delete(`/api/v1/auth/drinks/${drink.id}`);
     expect({
       message: `${drink.id} was deleted`,
