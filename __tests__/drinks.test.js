@@ -14,7 +14,7 @@ describe('drink routes', () => {
   afterAll(() => {
     return pool.end();
   });
-  it.skip('filter drinks based on their brew methods', async () => {
+  it('filter drinks based on their brew methods', async () => {
     const user = {
       username: 'CupAJoe',
       email: 'cupbjoe@aol.com',
@@ -27,7 +27,7 @@ describe('drink routes', () => {
 
     const expressoDrink = await Drink.insert({
       drinkName: 'Latte',
-      brew: 'Espresso',
+      brew: 'espresso',
       description:
         'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
       ingredients: ['Espresso', 'Steamed Milk'],
@@ -36,7 +36,7 @@ describe('drink routes', () => {
 
     await Drink.insert({
       drinkName: 'xyz',
-      brew: 'Drip',
+      brew: 'drip',
       description:
         'As the most popular coffee drink out there, the latte is comprised of a shot of espresso and steamed milk with just a touch of foam. It can be ordered plain or with a flavor shot of anything from vanilla to pumpkin spice.',
       ingredients: ['Espresso', 'Steamed Milk'],
