@@ -159,6 +159,134 @@ const drinks = [
       'Bring panela and coffee to a boil in a small pan for 30 minutes until panela is melted. Brew your coffee using your favorite brewing technique but add the hot aguapanela instead of hot water. Delicious sweetened coffee is ready.',
     ingredients: ['Coffee', 'Sweet', 'Panela', 'Traditional'],
   },
+  {
+    id: 21,
+    drinkName: 'Cafe Bombon',
+    brew: 'espresso',
+    description:
+      'Created in Spain, this espresso drink is made with sweetened condensed milk in a 1:1 ratio.',
+    ingredients: ['Coffee', 'Sweetened condensed milk'],
+  },
+  {
+    id: 22,
+    drinkName: 'Caffe Gommosa',
+    brew: 'espresso',
+    description:
+      'A single espresso shot that\'s poured over a single marshmallow.',
+    ingredients: ['Coffee', 'Marshmallow'],
+  },
+  {
+    id: 23,
+    drinkName: 'Galao',
+    brew: 'espresso',
+    description:
+      'A Portuguese drink made with espresso and foamed milk served in a tall glass.',
+    ingredients: ['Coffee', 'Milk'],
+  },
+  {
+    id: 24,
+    drinkName: 'Doppio',
+    brew: 'espresso',
+    description:
+      'A double shot of espresso that’s served in a demitasse cup (a small, single-serve cup).',
+    ingredients: ['Espresso Coffee'],
+  },
+  {
+    id: 25,
+    drinkName: 'Espresso Romano',
+    brew: 'espresso',
+    description:
+      'A shot of espresso with a slice of lemon on the side.',
+    ingredients: ['Espresso Coffee', 'Lemon'],
+  },
+  {
+    id: 26,
+    drinkName: 'Black Tie',
+    brew: 'espresso',
+    description:
+      'A drink made by combining a double shot of espresso (or strong coffee) with traditional Thai iced tea (a mixture of black tea, spices, and condensed milk or cream).',
+    ingredients: ['Espresso Coffee', 'Chai Tea', 'Condensed Milk'],
+  },
+  {
+    id: 27,
+    drinkName: 'Dirty Chai Latte',
+    brew: 'espresso',
+    description:
+      'A drink combining a regular caffè latte with chai spiced tea.',
+    ingredients: ['Espresso Coffee', 'Chai Tea'],
+  },
+  {
+    id: 28,
+    drinkName: 'Yuenyeung',
+    brew: 'drip',
+    description:
+      'A popular drink in Hong Kong made by combining coffee and Hong Kong-style milk tea.',
+    ingredients: ['Espresso Coffee', 'Milk Tea'],
+  },
+  {
+    id: 29,
+    drinkName: 'Caffè Corretto',
+    brew: 'espresso',
+    description:
+      'An Italian drink combining a shot of espresso that’s “corrected” with a shot of liquor (usually brandy, grappa, sambuca.)',
+    ingredients: ['Espresso Coffee', 'Liquor'],
+  },
+  {
+    id: 30,
+    drinkName: 'Rüdesheimer Kaffee',
+    brew: 'drip',
+    description:
+      'Deriving from Rüdesheim, Germany, this drink is made with coffee, sugar, and Asbach Uralt brandy, and topped with whipped cream.',
+    ingredients: ['Coffee', 'Asbach Uralt brandy', 'Whipped Cream', 'Sugar'],
+  },
+  {
+    id: 31,
+    drinkName: 'Pharisee',
+    brew: 'drip',
+    description:
+      'Served in a mug, this popular drink from north frisian Island in Nordstrand, Germany is made with black coffee, a double shot of rum, and whipped cream topping.',
+    ingredients: ['Coffee', 'Rum', 'Whipped Cream'],
+  },
+  {
+    id: 32,
+    drinkName: 'Barraquito',
+    brew: 'espresso',
+    description:
+      'A traditional drink from Tenerife (Canary Islands), mixing Licor 43 with espresso, foamed milk, condensed sweetened milk, cinnamon and lemon.',
+    ingredients: ['Espresso Coffee', 'Licor 43', 'Milk', 'Condensed Sweetened Milk', 'Cinnamon', 'Lemon'],
+  },
+  {
+    id: 33,
+    drinkName: 'Carajillo',
+    brew: 'espresso',
+    description:
+      'A Spanish drink that combines coffee with either rum, whiskey, brandy or anisette.',
+    ingredients: ['Espresso Coffee', 'Liquor'],
+  },
+  {
+    id: 34,
+    drinkName: 'Spanish Coffee',
+    brew: 'espresso',
+    description:
+      'An American take on the "Carajillo" that originated at Huber’s Cafe in Portland, Oregon in the 1970s. A coffee/alcohol combination served in a sugar-rimmed mug that is flamed to caramelize the sugar and then topped with whipped cream.',
+    ingredients: ['Espresso Coffee', 'Liquor', 'Whipped Cream'],
+  },
+  {
+    id: 35,
+    drinkName: 'Irish coffee',
+    brew: 'drip',
+    description:
+      'A drink combining coffee, whiskey, cream and sometimes sugar.',
+    ingredients: ['Coffee', 'Liquor', 'Cream'],
+  },
+  {
+    id: 36,
+    drinkName: 'Irish coffee',
+    brew: 'drip',
+    description:
+      'A drink combining coffee, whiskey, cream and sometimes sugar.',
+    ingredients: ['Coffee', 'Liquor', 'Cream'],
+  },
 ];
 
 export default drinks;
