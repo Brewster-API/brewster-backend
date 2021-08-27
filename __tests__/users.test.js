@@ -128,7 +128,6 @@ describe('user routes', () => {
 
   it('user can update their own posts via PUT', async () => {
     const user = await agent.post('/api/v1/auth/login').send({
-      username: 'CupAJoe',
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     });
@@ -151,6 +150,7 @@ describe('user routes', () => {
       ...userDrink,
       userId: user.body.id,
     });
+   
     const updatedDrinkInfo = await agent
       .put(`/api/v1/auth/drinks/${drink.id}`)
       .send({ ...updateDrink });
