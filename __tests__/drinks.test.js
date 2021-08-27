@@ -58,7 +58,7 @@ describe('drink routes', () => {
       email: 'cupcjoe@aol.com',
       password: 'coffee123',
     });
-
+    
     const drink = {
       drinkName: 'Latte',
       brew: 'Espresso',
@@ -68,7 +68,7 @@ describe('drink routes', () => {
       postId: user.body.id,
     };
 
-    const res = await request(app).post('/api/v1/drinks').send(drink);
+    const res = await agent.post('/api/v1/drinks').send(drink);
 
     expect(res.body).toEqual({
       id: '1',
