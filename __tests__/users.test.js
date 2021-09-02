@@ -15,6 +15,7 @@ describe('user routes', () => {
   afterAll(() => {
     return pool.end();
   });
+
   it('creates a user via POST', async () => {
     const res = await agent.post('/api/v1/auth/signup').send({
       email: 'cupajoe@aol.com',
@@ -23,9 +24,10 @@ describe('user routes', () => {
     expect(res.body).toEqual({
       id: '1',
       email: 'cupajoe@aol.com',
-      username: null, 
+      username: null,
     });
   });
+
   it('logs in a user via POST', async () => {
     const res = await agent.post('/api/v1/auth/login').send({
       email: 'cupajoe@aol.com',
@@ -37,68 +39,69 @@ describe('user routes', () => {
       email: 'cupajoe@aol.com',
     });
   });
+
   it('user can add fav drink via POST', async () => {
     const user = {
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
-   
+
     const addedDrink = await Drink.insert({
       drinkName: 'Americano',
       brew: 'drip',
       description: 'Best coffee ever',
       ingredients: ['Coffee'],
-      postId: '1', 
+      postId: '1',
     });
     const loggedUser = await agent.post('/api/v1/auth/login').send(user);
-    await agent
+    const res = await agent
       .post('/api/v1/auth/favorites')
-      .send({ id: loggedUser.body.id, drinkId: addedDrink.id });
-    expect({ ...loggedUser.body }).toEqual({
-      id: '1',
-      email: 'cupajoe@aol.com',
-      username: null,
+      .send({ drinkId: addedDrink.id });
+
+    expect(res.body).toEqual({
+      drinkId: addedDrink.id,
+      userId: loggedUser.body.id,
     });
   });
+
   it('gets a users favorite coffees via GET', async () => {
     const user = {
       email: 'cupajoe@aol.com',
       password: 'coffee123',
     };
 
-    const favoriteDrink = {
+    const regularDrink = {
       drinkName: 'Latte',
       brew: 'Espresso',
       description: 'xyz',
       ingredients: ['Espresso', 'Milk'],
     };
 
-    const favoriteDrink1 = {
+    const favoriteDrink = {
       drinkName: 'Americano',
       brew: 'Espresso',
       description: 'xyz',
       ingredients: ['Espresso', 'Milk'],
     };
 
-    await Drink.insert(favoriteDrink);
-    await Drink.insert(favoriteDrink1);
-    const resFavDrink = await Drink.getAll();
+    await Drink.insert(regularDrink);
+    const drink = await Drink.insert(favoriteDrink);
+
     const loggedUser = await agent.post('/api/v1/auth/login').send(user);
+    await Favorite.add(loggedUser.body.id, drink.id);
 
-    await Favorite.add(loggedUser.body.id, resFavDrink[0].id);
-    await agent
-      .post('/api/v1/auth/favorites')
-      .send({ id: loggedUser.body.id, drinkId: resFavDrink[1].id });
+    // This was previously testing a POST route while your
+    // test is describing a GET route
+    const res = await agent.get('/api/v1/auth/favorites');
 
-    expect({
-      ...loggedUser.body,
-      favoriteDrink: resFavDrink.map((favoDrink) => favoDrink.drinkName),
-    }).toEqual({
-      id: '1',
-      favoriteDrink: resFavDrink.map((favoDrink) => favoDrink.drinkName),
-      email: 'cupajoe@aol.com',
-      username: null,
-    });
+    // Make sure you're testing the response.
+    // Because your database isn't being cleared between tests,
+    // you can use a different Jest matcher to make sure
+    // your response includes the favorite that was added
+    // https://jestjs.io/docs/next/expect#expectarraycontainingarray
+    expect(res.body).toEqual(
+      expect.arrayContaining([{ drink_name: favoriteDrink.drinkName }])
+    );
   });
 
   it('users can add drinks under their account via POST', async () => {
@@ -146,11 +149,11 @@ describe('user routes', () => {
       ingredients: ['Milk', 'Tea'],
     };
 
-    const drink = await Drink.insertDrinkToAPI({
+    const drink = await Drink.insert({
       ...userDrink,
-      userId: user.body.id,
+      postId: user.body.id,
     });
-   
+
     const updatedDrinkInfo = await agent
       .put(`/api/v1/auth/drinks/${drink.id}`)
       .send({ ...updateDrink });
@@ -158,7 +161,7 @@ describe('user routes', () => {
     expect(updatedDrinkInfo.body).toEqual({
       id: drink.id,
       ...updateDrink,
-      postId: user.body.id, 
+      postId: user.body.id,
     });
   });
 
@@ -175,17 +178,13 @@ describe('user routes', () => {
       ingredients: ['Espresso', 'Milk'],
       postId: user.body.id,
     };
-    const drink = await Drink.insertDrinkToAPI({
+    const drink = await Drink.insert({
       ...userDrink,
-      userId: user.body.id,
+      postId: user.body.id,
     });
-    
-    await agent.delete(`/api/v1/auth/drinks/${drink.id}`);
-    expect({
-      message: `${drink.id} was deleted`,
-    }).toEqual({
-      message: `${drink.id} was deleted`,
-    });
-  });
 
+    const res = await agent.delete(`/api/v1/auth/drinks/${drink.id}`);
+
+    expect(res.body).toEqual({ ...drink });
+  });
 });

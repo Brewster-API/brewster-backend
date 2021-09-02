@@ -14,6 +14,7 @@ describe('drink routes', () => {
   afterAll(() => {
     return pool.end();
   });
+
   it('filter drinks based on their brew methods', async () => {
     const user = {
       username: 'CupAJoe',
@@ -21,6 +22,8 @@ describe('drink routes', () => {
       password: 'coffee123',
     };
 
+    // You should use your User.insert method here instead so
+    // that your tests only make the requests that you're testing
     const loggedUser = await request(app)
       .post('/api/v1/auth/signup')
       .send(user);
@@ -52,13 +55,14 @@ describe('drink routes', () => {
       },
     ]);
   });
+
   it('creates a new drink via POST', async () => {
     const user = await agent.post('/api/v1/auth/signup').send({
       username: 'CupAJoe',
       email: 'cupcjoe@aol.com',
       password: 'coffee123',
     });
-    
+
     const drink = {
       drinkName: 'Latte',
       brew: 'Espresso',
