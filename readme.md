@@ -13,6 +13,9 @@ Additionally, since it allows users to create their own accounts, logged in user
 ## Deployed URL
 https://warm-gorge-13979.herokuapp.com
 
+## My Postman Clone 
+https://pensive-clarke-3eaab2.netlify.app/
+
 ## Endpoints
 1. Authentication (User Signup) --- https://warm-gorge-13979.herokuapp.com/api/v1/auth/signup
 2. Authentication (User Login) --- https://warm-gorge-13979.herokuapp.com/api/v1/auth/login
